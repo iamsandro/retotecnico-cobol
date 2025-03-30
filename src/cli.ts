@@ -1,10 +1,9 @@
 import { ParserCSV } from "./parcerCSV";
+import { ReportGenerator } from "./reportGenerator";
 import { TransactionDataAnalyzer } from "./transactionDataAnalyzer";
 
 const data = ParserCSV(process.argv[2]);
-console.log("Ruben: data", data);
-const analizer = new TransactionDataAnalyzer(data);
 
-console.log("Ruben: analizer", analizer.CalculateFinalBalance());
-console.log("Ruben: analizer", analizer.findHighestTransaction());
-console.log("Ruben: analizer", analizer.countTransactionsByType());
+const transactions = new TransactionDataAnalyzer(data);
+const analizer = new ReportGenerator(transactions);
+console.log("Ruben: Reporte final", analizer.generateReport());
