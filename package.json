@@ -4,8 +4,14 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "docs": "typedoc"
+        "start": "npm run build && node dist/index.js",
+        "dev": "ts-node src/index.ts",
+        "test:watch": "jest --watch",
+        "build": "tsc",
+        "build:watch": "tsc --watch",
+        "test": "npm run build && jest",
+        "docs": "typedoc",
+        "load": "npm run build && node dist/cli.js"
     },
     "keywords": [],
     "author": "",
