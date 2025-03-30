@@ -9,6 +9,14 @@ import { Transaction } from "./types";
  */
 export function ParserCSV(filePath: string): Transaction[] {
     try {
+        if (!filePath)
+            throw new Error("No se ha proporcionado la ruta del archivo CSV.");
+
+        // Verifica si el archivo existe en la ruta especificada
+        // Si no existe, lanza un error
+        if (!fs.existsSync(filePath))
+            throw new Error("El archivo CSV no existe. Verifica la ruta.");
+
         const content = fs.readFileSync(filePath, "utf8");
 
         // Parsear el contenido del archivo CSV, nos devuelve un array de objetos
@@ -61,11 +69,7 @@ export function ParserCSV(filePath: string): Transaction[] {
         }
 
         return records;
-    } catch (error) {
-        console.error(
-            "Error al intentar decodificar el archivo CSV 😖:",
-            error,
-        );
-        return [];
+    } catch (error: any) {
+        throw new Error(`Error 😖: ${error.ENOENT || error.message || error}`);
     }
 }
