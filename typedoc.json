@@ -1,0 +1,6 @@
+{
+    "entryPoints": ["src/cli.ts"],
+    "out": "docs",
+    "theme": "default",
+    "includeVersion": true
+}
