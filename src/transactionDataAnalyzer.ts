@@ -58,7 +58,8 @@ export class TransactionDataAnalyzer {
 
     /**
      * Cuenta el número de transacciones por tipo.
-     * @returns Un objeto con el conteo de transacciones por tipo.
+     * @returns Un objeto con el conteo de transacciones por tipo, el cual puede ser "Crédito" o "Débito".
+     *          Ejemplo: { Crédito: 2, Débito: 1 }
      */
     public countTransactionsByType(): TransactionCounts {
         let TransactionCounts: TransactionCounts = { Crédito: 0, Débito: 0 };
