@@ -8,7 +8,8 @@ export interface Transaction {
 }
 
 /**
- * Resultado de una transacción
+ * Contador de transacciones por tipo
+ * @property {number} Crédito - Número de transacciones de tipo "Crédito"
  */
 export interface TransactionCounts {
     Crédito: number;
