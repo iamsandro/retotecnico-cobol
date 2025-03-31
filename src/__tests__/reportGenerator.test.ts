@@ -9,11 +9,11 @@ describe("ReportGenerator", () => {
         { id: "3", tipo: "Crédito", monto: 200 },
     ];
 
-    const transactionDataAnalyzer = new TransactionDataAnalyzer(transactions);
-    const reportGenerator = new ReportGenerator(transactionDataAnalyzer);
-
     it("Debe generar un reporte correcto", () => {
-        const report = reportGenerator.generateReport();
+        const transactionDataAnalyzer = new TransactionDataAnalyzer(
+            transactions,
+        );
+        const report = ReportGenerator.generateReport(transactionDataAnalyzer);
         expect(report).toContain("Reporte de Transacciones:");
         expect(report).toContain("Balance Final: 250");
         expect(report).toContain("Transacción de Mayor Monto: ID 3 - 200)");

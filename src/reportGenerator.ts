@@ -1,17 +1,14 @@
 import { TransactionDataAnalyzer } from "./transactionDataAnalyzer";
 
 export class ReportGenerator {
-    constructor(
-        private readonly transactionDataAnalyzer: TransactionDataAnalyzer,
-    ) {}
-
-    public generateReport(): string {
-        const finalBalance =
-            this.transactionDataAnalyzer.CalculateFinalBalance();
+    public static generateReport(
+        transactionDataAnalyzer: TransactionDataAnalyzer,
+    ): string {
+        const finalBalance = transactionDataAnalyzer.CalculateFinalBalance();
         const highestTransaction =
-            this.transactionDataAnalyzer.findHighestTransaction();
+            transactionDataAnalyzer.findHighestTransaction();
         const transactionCounts =
-            this.transactionDataAnalyzer.countTransactionsByType();
+            transactionDataAnalyzer.countTransactionsByType();
 
         return `
             Reporte de Transacciones:
