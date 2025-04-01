@@ -1,3 +1,5 @@
+import { Transaction, TransactionCounts } from "../types";
+
 export const CLI_MESSAGES = {
     WELCOME: "¡Hola! Soy tu asistente de Balance 💹",
     REMEMBER:
@@ -15,17 +17,13 @@ export const CLI_MESSAGES = {
     LINE: "----------------------------------------",
     LINE_DOUBLE: "«═══════════════════════════════════════════════════»",
 
-    REPORT: {
-        HEADER: "Reporte de Transacciones:",
-        HIGHEST_TRANSACTION: "Transacción de Mayor Monto: ID {id} - {monto}",
-        BALANCE: (balance: number) => `Balance Final: ${balance}`,
-        COUNT_TRANSACTION_BY_TYPE: (count: {
-            Crédito: number;
-            Débito: number;
-        }) =>
-            `Conteo de Transacciones por Tipo: Crédito: ${count.Crédito} Débito: ${count.Débito}`,
-        FOOTER: "Fin del Reporte.",
-    },
+    REPORT: (finalBalance: number, highestTransaction: Transaction, transactionCounts: TransactionCounts) => `
+            Reporte de Transacciones:
+            -------------------------
+            Balance Final: ${finalBalance}
+            Transacción de Mayor Monto: ID ${highestTransaction?.id} - ${highestTransaction?.monto})
+            Conteo de Transacciones por Tipo: Crédito: ${transactionCounts.Crédito} Débito: ${transactionCounts.Débito}
+        `
 };
 
 export const prompt = {
@@ -43,3 +41,5 @@ export const prompt = {
         },
     },
 };
+
+
