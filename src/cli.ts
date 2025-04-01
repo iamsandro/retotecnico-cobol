@@ -21,6 +21,7 @@ export class InteractiveCLI {
             message: prompt.filePath.message,
             validate: (input: string) => {
                 if (!input.trim()) return CLI_MESSAGES.EMPTY_ROUTE;
+                if (!input.endsWith(".csv")) return CLI_MESSAGES.WRONG_ROUTE;
                 return true;
             },
         });
