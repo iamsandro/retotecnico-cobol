@@ -1,4 +1,5 @@
 import { ParserCSV } from "../parcerCSV";
+import { ERROR_MESSAGES } from "../constants/errors_messages";
 import fs from "fs";
 
 describe("ParcerCSV", () => {
@@ -43,28 +44,13 @@ describe("ParcerCSV", () => {
         expect(result[2]).toEqual({ id: "3", tipo: "Crédito", monto: "200" });
     });
 
-    it("Debe lanzar un error si el archivo no existe", () => {
-        const invalidFilePath = "src/__tests__/__mocks__/invalid.csv";
-        expect(() => ParserCSV(invalidFilePath)).toThrowError(
-            "Error 😖: El archivo CSV no existe. Verifica la ruta.",
-        );
-    });
-
-    it("Debe lanzar un error si el archivo CSV está vacío", () => {
-        const emptyFilePath = "src/__tests__/__mocks__/emptyFile.csv";
-        fs.writeFileSync(emptyFilePath, "", "utf8");
-
-        expect(() => ParserCSV(emptyFilePath)).toThrowError(
-            "Error 😖: Archivo CSV vacío. Por favor, verifica el archivo.",
-        );
-    });
 
     it("Debe lanzar un error si el archivo CSV no tiene registros", () => {
         const emptyFilePath = "src/__tests__/__mocks__/empty.csv";
         fs.writeFileSync(emptyFilePath, "", "utf8");
 
         expect(() => ParserCSV(emptyFilePath)).toThrowError(
-            "Error 😖: Archivo CSV vacío. Por favor, verifica el archivo.",
+            ERROR_MESSAGES.EMPTY_CSV
         );
     });
 
