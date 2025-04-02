@@ -1,36 +1,36 @@
 {
-    "name": "retotecnico-cobol",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "start": "node dist/index.js",
-        "dev": "ts-node src/index.ts",
-        "build": "tsc",
-        "build:watch": "tsc --watch",
-        "test": "npm run build && jest",
-        "test:watch": "jest --watch",
-        "docs": "typedoc",
-        "load": "npm run build && node dist/index.js",
-        "analyze": "node dist/index.js"
-    },
-    "bin": {
-        "retotecnico-cobol": "./dist/index.js"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "@types/jest": "^29.5.14",
-        "csv-parse": "^5.6.0",
-        "jest": "^29.7.0",
-        "ts-jest": "^29.3.0",
-        "ts-node": "^10.9.2",
-        "typedoc": "^0.28.1",
-        "typescript": "^5.8.2"
-    },
-    "dependencies": {
-        "@types/inquirer": "^9.0.7",
-        "inquirer": "^12.5.0"
-    }
+  "name": "retotecnico-cobol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "test": "npm run build && jest",
+    "test:watch": "jest --watch",
+    "docs": "typedoc",
+    "load": "npm run build && node dist/index.js",
+    "analyze": "node dist/index.js"
+  },
+  "bin": {
+    "retotecnico-cobol": "./dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/inquirer": "^9.0.7",
+    "@types/jest": "^29.5.14",
+    "csv-parse": "^5.6.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.0",
+    "ts-node": "^10.9.2",
+    "typedoc": "^0.28.1",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "inquirer": "^12.5.0"
+  }
 }
