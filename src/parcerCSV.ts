@@ -1,14 +1,15 @@
 import fs from "fs";
 import { parse } from "csv-parse/sync";
-import { Transaction } from "./types";
+import { ErrorTransaction, ParsedData, Transaction } from "./types";
 import { ERROR_MESSAGES } from "./constants/errors_messages";
+import { FIELDS } from "./constants/constantVariable";
 
 /**
  * Función que recibe la ruta de un archivo CSV y devuelve un array de transacciones.
  * @param filePath Ruta del archivo CSV.
  * @returns Array de transacciones.
  */
-export function ParserCSV(filePath: string): Transaction[] {
+export function ParserCSV(filePath: string): ParsedData {
   try {
     const content = fs.readFileSync(filePath, "utf8");
 
@@ -26,27 +27,53 @@ export function ParserCSV(filePath: string): Transaction[] {
     if (records.length === 0) {
       throw new Error(ERROR_MESSAGES.EMPTY_CSV);
     } else {
-      records.forEach((record: Transaction, index: number) => {
-        // Verifica si el registro tiene la propiedad "tipo" requerida
-        if (!["Crédito", "Débito"].includes(record.tipo)) {
-          throw new Error(ERROR_MESSAGES.INVALID_TYPE(index, record));
-        }
+      const errorRecords: ErrorTransaction[] = records.reduce(
+        (acc: ErrorTransaction[], record: Transaction, index: number) => {
+          let hasError = false;
+          let errors: Array<string> = [];
 
-        // Verifica si el registro tiene la propiedad "monto" requerida (tipo numérico)
-        if (isNaN(Number(record.monto)))
-          throw new Error(ERROR_MESSAGES.INVALID_AMOUNT(index, record));
+          // Verifica si el registro tiene la propiedad "tipo" requerida
+          if (!["Crédito", "Débito"].includes(record.tipo)) {
+            acc.push({
+              ...record,
+              indice: index,
+              error_field: [...errors, FIELDS.TYPE],
+            });
+            hasError = true;
+          }
 
-        // Verfica si el monto no sea negativo
-        if (record.monto < 0)
-          throw new Error(ERROR_MESSAGES.NEGATIVE_AMOUNT(index, record));
+          // Verifica si el registro tiene la propiedad "monto" requerida (tipo numérico)
+          if (isNaN(Number(record.monto)) || +record.monto < 0) {
+            acc.push({
+              ...record,
+              indice: index,
+              error_field: [...errors, FIELDS.AMOUNT],
+            });
+            hasError = true;
+          }
 
-        // Verifica si el registro tiene la propiedad "id" requerida (tipo numérico)
-        if (isNaN(Number(record.id)))
-          throw new Error(ERROR_MESSAGES.INVALID_ID(index, record));
-      });
+          // Verifica si el registro tiene la propiedad "id" requerida (tipo numérico)
+          if (isNaN(Number(record.id))) {
+            acc.push({
+              ...record,
+              indice: index,
+              error_field: [...errors, FIELDS.ID],
+            });
+            hasError = true;
+          }
+
+          // Si el registro tiene algún error, lo eliminamos del array records
+          if (hasError) {
+            records.splice(index, 1);
+          }
+
+          return acc;
+        },
+        [],
+      );
+
+      return { transactions: records, errors: errorRecords };
     }
-
-    return records;
   } catch (error: any) {
     throw new Error(`Error 😖: ${error.ENOENT || error.message || error}`);
   }
