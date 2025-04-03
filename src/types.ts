@@ -16,6 +16,16 @@ export interface TransactionCounts {
   Débito: number;
 }
 
+export interface ErrorTransaction extends Transaction {
+  error_field: string[];
+  indice: number;
+}
+
+export interface ParsedData {
+  transactions: Transaction[];
+  errors: ErrorTransaction[];
+}
+
 export interface DetailsPrompt {
   type:
     | "input"
